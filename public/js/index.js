@@ -4,10 +4,7 @@ let socket = io();
 socket.on('connect', function () {    // we listen to event
     console.log('Connected to server');
 
-    socket.emit('createMessage', {
-        from: "vlado",
-        text: "Hi, how are you?"
-    });
+
 });
 
 socket.on('disconnect', function () {  // it is gonna fire when connection drops
