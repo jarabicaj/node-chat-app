@@ -7,7 +7,8 @@ const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
 
 let app = express();
-let server = http.createServer(app); //nezmenime funkcnost ale je to potrebne kvoli web sockets
+//nezmenime funkcnost ale je to potrebne kvoli web sockets:
+let server = http.createServer(app);
 let io = socketIO(server); //web sockets server
 
 app.use(express.static(publicPath));
@@ -17,6 +18,16 @@ app.use(express.static(publicPath));
 // and do sth when connection comes in (callback function)
 io.on('connection', (socket) => {
     console.log('New user connected');
+
+    socket.emit('newMessage', {
+        from: "dzejo",
+        text: "Hi Bro",
+        createdAt: 12345
+    });
+
+    socket.on('createMessage', (message) => {
+        console.log('createMessage', message)
+    });
 
     socket.on('disconnect', () => {
         console.log('User was disconnected')
