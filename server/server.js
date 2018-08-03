@@ -30,7 +30,7 @@ io.on('connection', (socket) => {
 
         // send to everyone who is connected INCLUDE ME
         io.emit('newMessage', generateMessage(message.from, message.text));
-        callback('This is from the server.');
+        callback();
 
     });
 
