@@ -15,7 +15,7 @@ socket.on('disconnect', function () {  // it is gonna fire when connection drops
 socket.on('newMessage', function (message) {
     console.log('New message',message);
 
-    let li = jQuery('<li></li>'); //create element by jQuery
+    let li = jQuery('<li></li>'); //crea te element by jQuery
     li.text(`${message.from}: ${message.text}`);
 
     jQuery('#messages').append(li);
