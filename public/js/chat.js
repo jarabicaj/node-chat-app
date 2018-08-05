@@ -13,9 +13,12 @@ function scrollToBottom () {
     let newMessageHeight = newMessage.innerHeight();
     let lastMessageHeight = newMessage.prev().innerHeight();
 
-    if (clientHeight + scrollTop + newMessageHeight  + lastMessageHeight>= scrollHeight) {
+    if (clientHeight + scrollTop + newMessageHeight  + lastMessageHeight >= scrollHeight) {
         messages.scrollTop(scrollHeight);
     }
+    // if (clientHeight + scrollTop <= scrollHeight) {
+    //     messages.scrollTop(scrollHeight);
+    // }
 }
 // open up a web socket and keep that connection open
 socket.on('connect', function () {    // we listen to event
