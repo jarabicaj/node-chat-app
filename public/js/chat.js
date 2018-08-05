@@ -1,4 +1,3 @@
-// we are making request from the client to the server
 let socket = io();
 
 function scrollToBottom () {
@@ -20,9 +19,19 @@ function scrollToBottom () {
     //     messages.scrollTop(scrollHeight);
     // }
 }
-// open up a web socket and keep that connection open
-socket.on('connect', function () {    // we listen to event
-    console.log('Connected to server');
+
+socket.on('connect', function () {
+    var params = jQuery.deparam(window.location.search);
+
+    socket.emit('join', params, function (err) {
+        if (err) {
+            alert(err);
+            window.location.href = '/';
+        } else {
+            console.log('No error');
+
+        }
+    })
 
 
 });
@@ -30,6 +39,20 @@ socket.on('connect', function () {    // we listen to event
 socket.on('disconnect', function () {  // it is gonna fire when connection drops
     console.log('Disconnected from server')
 }) ;
+
+socket.on('updateUserList', function (users) {
+    console.log('Users list', users);
+    var ol = jQuery('<ol></ol>');
+    
+    users.forEach(function (user) {
+        ol.append(jQuery('<li></li>').text(user));
+    });
+
+    jQuery('#users').html(ol);
+
+
+    
+});
 
 //custom event
 socket.on('newMessage', function (message) {
