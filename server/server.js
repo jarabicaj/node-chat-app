@@ -27,11 +27,9 @@ io.on('connection', (socket) => {
 
     socket.on('createMessage', (message, callback) => {
         console.log('createMessage', message);
-
         // send to everyone who is connected INCLUDE ME
         io.emit('newMessage', generateMessage(message.from, message.text));
         callback();
-
     });
 
     socket.on('createLocationMessage', (coords) => {
