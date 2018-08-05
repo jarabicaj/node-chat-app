@@ -1,5 +1,22 @@
 // we are making request from the client to the server
 let socket = io();
+
+function scrollToBottom () {
+    // Selectors
+    let messages = jQuery('#messages');
+    let newMessage = messages.children('li:last-child');
+    // Heights
+    let clientHeight = messages.prop('clientHeight');
+    let scrollTop = messages.prop('scrollTop');
+    let scrollHeight = messages.prop('scrollHeight');
+
+    let newMessageHeight = newMessage.innerHeight();
+    let lastMessageHeight = newMessage.prev().innerHeight();
+
+    if (clientHeight + scrollTop + newMessageHeight  + lastMessageHeight>= scrollHeight) {
+        messages.scrollTop(scrollHeight);
+    }
+}
 // open up a web socket and keep that connection open
 socket.on('connect', function () {    // we listen to event
     console.log('Connected to server');
@@ -21,10 +38,8 @@ socket.on('newMessage', function (message) {
         createdAt: formattedTime
     });
     jQuery('#messages').append(html);
-    // let formattedTime = moment(message.createdAt).format('H:mm');
-    // let li = jQuery('<li></li>'); //crea te element by jQuery
-    // li.text(`${message.from} ${formattedTime}: ${message.text}`);
-    // jQuery('#messages').append(li);
+    scrollToBottom();
+
 });
 
 socket.on('newLocationMessage', function (message) {
@@ -36,13 +51,7 @@ socket.on('newLocationMessage', function (message) {
         createdAt: formattedTime
     });
     jQuery('#messages').append(html);
-
-    // let li = jQuery('<li></li>');
-    // let a = jQuery('<a target="_blank">My current location</a>');
-    // li.text(`${message.from} ${formattedTime}: `);
-    // a.attr('href', message.url);
-    // li.append(a);
-    // jQuery('#messages').append(li);
+    scrollToBottom();
 });
 
 jQuery('#message-form').on('submit', function (e) {
