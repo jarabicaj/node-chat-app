@@ -21,7 +21,7 @@ function scrollToBottom () {
 }
 
 socket.on('connect', function () {
-    var params = jQuery.deparam(window.location.search);
+    let params = jQuery.deparam(window.location.search);
 
     socket.emit('join', params, function (err) {
         if (err) {
@@ -42,7 +42,7 @@ socket.on('disconnect', function () {  // it is gonna fire when connection drops
 
 socket.on('updateUserList', function (users) {
     console.log('Users list', users);
-    var ol = jQuery('<ol></ol>');
+    let ol = jQuery('<ol></ol>');
     
     users.forEach(function (user) {
         ol.append(jQuery('<li></li>').text(user));
@@ -86,7 +86,6 @@ jQuery('#message-form').on('submit', function (e) {
     let messageTextbox = jQuery('[name=message]');
 
     socket.emit('createMessage', {
-        from: 'User',
         text: messageTextbox.val()
     }, function () {
         messageTextbox.val('');
